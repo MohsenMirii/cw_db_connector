@@ -1,0 +1,193 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Flask API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000"
+    },
+    {
+      "url": "http://localhost:5000"
+    }
+  ],
+  "paths": {
+    "/measurements": {
+      "get": {
+        "tags": [
+          "measurements"
+        ],
+        "summary": "Retrieve all measurements",
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SensorData"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "measurements"
+        ],
+        "summary": "Create Measurements",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SensorData"
+                }
+              },
+              "examples": {
+                "example1": {
+                  "value": [
+                    {
+                      "measurement": "sensor_data",
+                      "tags": {
+                        "sensor": "temperature"
+                      },
+                      "time": "2024-05-19T12:00:00Z",
+                      "fields": {
+                        "value": 25,
+                        "state": "new"
+                      }
+                    },
+                    {
+                      "measurement": "sensor_data",
+                      "tags": {
+                        "sensor": "humidity"
+                      },
+                      "time": "2024-05-19T12:00:00Z",
+                      "fields": {
+                        "value": 60,
+                        "state": "new"
+                      }
+                    },
+                    {
+                      "measurement": "sensor_data",
+                      "tags": {
+                        "sensor": "smoke"
+                      },
+                      "time": "2024-05-19T12:00:00Z",
+                      "fields": {
+                        "value": 0,
+                        "state": "new"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Book": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "Java"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": "int32"
+          },
+          "fullName": {
+            "type": "string",
+            "example": "Nuxt"
+          },
+          "userName": {
+            "type": "string",
+            "example": "Nuxt"
+          },
+          "telegramId": {
+            "type": "string",
+            "example": "Nuxt"
+          },
+          "role": {
+            "type": "string",
+            "example": "Nuxt"
+          }
+        }
+      },
+      "SensorData": {
+        "type": "object",
+        "properties": {
+          "measurement": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fields": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "state": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "value",
+              "state"
+            ]
+          }
+        },
+        "required": [
+          "measurement",
+          "tags",
+          "time",
+          "fields"
+        ]
+      }
+    }
+  }
+}
